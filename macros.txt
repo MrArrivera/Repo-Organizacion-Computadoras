@@ -1,0 +1,85 @@
+%macro print_int 1
+
+mov eax, 4
+
+mov ebx, 1
+
+mov ecx, %1
+
+mov edx, 4
+
+int 0x80
+
+%endmacro
+
+section .data
+
+array dd 1, 2, 3, 4, 5
+
+section .text
+
+global _start
+
+_start:
+
+mov ecx, 0
+
+mov eax, 0
+
+bucle:
+
+mov ebx, [array + ecx*4]
+
+add eax, ebx
+
+inc ecx
+
+cmp ecx, 5
+
+jl bucle
+
+print_int eax
+
+mov eax, 1
+
+xor ebx, ebx
+
+int 0x80
+El programa suma todos los elementos del arreglo y muestra el resultado. La suma
+1+2+3+4+5 = 15, ese es el valor que intenta imprimir.
+Se hace una macro que imprime 4 bytes en pantalla usando la llamada al sistema write.
+Se crea un arreglo de enteros de 32 bits (dd = double word). Contiene los valores: 1, 2, 3, 4
+y 5.
+Se crea un bucle que accede al arreglo.
+Se hace acumulacion mediante add y syscalls para imprimir y salir.
+
+
+_start:
+
+mov ecx, 0
+
+mov eax, 0
+
+bucle:
+
+mov ebx, [array + ecx*4]
+
+add eax, ebx
+
+inc ecx
+
+cmp ecx, 5
+
+jl bucle
+
+print_int eax
+
+mov eax, 1
+
+xor ebx, ebx
+
+int 0x80
+
+Este código recorre un arreglo de 5 números, los suma y muestra el resultado.
+Vuelve a usar la macro print int, y un bucle para acceder a los datos del arreglo. Además de
+syscalls para salir, acumuladores y arreglos.

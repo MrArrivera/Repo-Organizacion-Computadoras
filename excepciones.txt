@@ -1,0 +1,107 @@
+ENSAMBLADOR TRY / CATCH
+
+section .text
+global _start
+
+_start:
+
+    ; =====================================================
+    ; SIMULACIÓN DE TRY / CATCH
+    ; =====================================================
+
+TRY_BLOCK:
+
+    ; "Código riesgoso" que puede causar un error simulado
+    mov eax, [valor]       ; intentar leer memoria
+
+    cmp eax, 0             ; simulación: si el valor es 0, ocurre "error"
+    je THROW_EXCEPTION     ; si ocurre error → saltar al "catch"
+
+    ; Si no hubo error, continuar normalmente
+    jmp END_TRY            ; salir del bloque try
+
+; =====================================================
+; CATCH (manejo de excepción)
+; =====================================================
+THROW_EXCEPTION:
+
+    ; Aquí va el "código del catch"
+    mov eax, -1            ; valor de error
+    mov ebx, msgError
+    jmp END_TRY            ; continuar después del catch
+
+; =====================================================
+; Continuación del programa
+; =====================================================
+END_TRY:
+
+    ; Código final que siempre se ejecuta
+    mov ecx, msgEnd
+    ; ... más instrucciones ...
+
+    ; Fin del programa
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+
+section .data
+valor dd 0              ; Forzar excepción: valor = 0
+msgError db "Error atrapado en catch!", 0
+msgEnd   db "Programa continua.", 0
+
+C MANEJO DE EXCEPCIONES
+#include <stdio.h>
+#include <setjmp.h>
+
+jmp_buf buffer;
+
+void funcionPeligrosa()
+{
+    printf("Ejecutando funcion peligrosa...\n");
+
+    // Simulamos una excepcion
+    longjmp(buffer, 1);
+}
+
+int main()
+{
+    int codigo = setjmp(buffer);
+
+    if (codigo == 0)
+    {
+        // Codigo normal (TRY)
+        printf("Inicio del programa.\n");
+        funcionPeligrosa();
+        printf("Esto no se ejecutara porque longjmp interrumpe.\n");
+    }
+    else
+    {
+        // Manejo de error (CATCH)
+        printf("⚠ Se capturo una excepcion con codigo: %d\n", codigo);
+    }
+
+    printf("Programa continua normalmente.\n");
+    return 0;
+}
+
+CODIGO PARA BREAKPOINTS
+
+#include <stdio.h>
+
+int suma(int a, int b) {
+    int resultado = a + b;
+    return resultado;
+}
+
+int main() {
+    int x = 5;
+    int y = 7;
+
+    int r = suma(x, y);
+
+    printf("La suma es: %d\n", r);
+
+    return 0;
+}
+

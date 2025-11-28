@@ -1,0 +1,67 @@
+; ================================
+; MACRO: Convierte un caracter ASCII a número
+; ================================
+%macro ASCII_TO_NUM 2
+    mov %1, [%2]     ; carga el ASCII
+    sub %1, '0'      ; convierte a número
+%endmacro
+
+
+section .data
+    estructura db "5/3/7", 0   ; Estructura tipo X/X/X (3 números)
+
+
+section .bss
+    suma resb 1                ; Aquí guardaremos el resultado final
+
+
+section .text
+    global _start
+
+_start:
+
+    mov esi, estructura     ; puntero a la estructura
+    mov al, 0               ; acumulador para la suma
+
+; ================================
+; Primer número (antes del primer '/')
+; ================================
+    ASCII_TO_NUM bl, esi    ; convierte estructura[0]
+    add al, bl              ; suma el primer número
+
+; ================================
+; Segundo número (después del '/')
+; ================================
+    add esi, 2              ; saltamos a la posición del segundo número
+    ASCII_TO_NUM bl, esi
+    add al, bl
+
+; ================================
+; Tercer número (después del segundo '/')
+; ================================
+    add esi, 2
+    ASCII_TO_NUM bl, esi
+    add al, bl
+
+; ================================
+; Guardar resultado como ASCII
+; ================================
+    add al, '0'
+    mov [suma], al
+
+
+; ================================
+; Imprimir resultado
+; ================================
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, suma
+    mov edx, 1
+    int 0x80
+
+; ================================
+; Salir
+; ================================
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80

@@ -1,0 +1,303 @@
+Punto e
+A
+section .data
+    num1 db 5               ; Primer número
+    num2 db 11              ; Segundo número
+    result db 0             ; Resultado de la suma
+    msg db 'Resultado: ', 0 ; Mensaje a imprimir
+
+section .bss
+    buffer resb 4           ; Buffer para el carácter final
+
+section .text
+    global _start
+
+_start:
+
+    mov al, [num1]          ; Cargar num1
+    add al, [num2]          ; Sumar num2 → 16
+    mov [result], al        ; Guardar resultado
+
+    ; --- Aquí cambiamos la conversión ---
+    ; Queremos que el resultado ASCII sea 'A' (65)
+
+    mov eax, 'A'            ; ASCII de 'A' = 65
+    mov [buffer], al        ; Guardar 'A' en el buffer
+
+    ; Imprimir "Resultado: "
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg
+    mov edx, 11
+    int 0x80
+
+    ; Imprimir 'A'
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, buffer
+    mov edx, 1
+    int 0x80
+
+    ; Salir
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+\
+
+section .data
+    num1 db 5               ; Primer número
+    num2 db 11              ; Segundo número
+    result db 0             ; Resultado de la suma
+    msg db 'Resultado: ', 0 ; Mensaje a imprimir
+
+section .bss
+    buffer resb 4           ; Buffer para el carácter final
+
+section .text
+    global _start
+
+_start:
+
+    mov al, [num1]          ; Cargar num1
+    add al, [num2]          ; Sumar num2 → 16
+    mov [result], al        ; Guardar resultado
+
+    ; --- Aquí cambiamos la conversión ---
+    ; Queremos que el resultado ASCII sea '\' (92)
+
+    mov eax, '\'            ; Cargar '\'
+    mov [buffer], al        ; Guardar '\' en el buffer
+
+    ; Imprimir "Resultado: "
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg
+    mov edx, 11
+    int 0x80
+
+    ; Imprimir '\'
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, buffer
+    mov edx, 1
+    int 0x80
+
+    ; Salir
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+$
+section .data
+    num1 db 5               ; Primer número
+    num2 db 11              ; Segundo número
+    result db 0             ; Resultado de la suma
+    msg db 'Resultado: ', 0 ; Mensaje a imprimir
+
+section .bss
+    buffer resb 4           ; Buffer para el carácter final
+
+section .text
+    global _start
+
+_start:
+
+    mov al, [num1]          ; Cargar num1
+    add al, [num2]          ; Sumar num2 → 16
+    mov [result], al        ; Guardar resultado
+
+    ; --- Conversión reemplazada ---
+    ; Queremos imprimir '$' (ASCII 36)
+
+    mov eax, '$'            ; Cargar el carácter '$'
+    mov [buffer], al        ; Guardarlo en el buffer
+
+    ; Imprimir "Resultado: "
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg
+    mov edx, 11
+    int 0x80
+
+    ; Imprimir '$'
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, buffer
+    mov edx, 1
+    int 0x80
+
+    ; Salir
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+&
+section .data
+    num1 db 5               ; Primer número
+    num2 db 11              ; Segundo número
+    result db 0             ; Resultado de la suma
+    msg db 'Resultado: ', 0 ; Mensaje a imprimir
+
+section .bss
+    buffer resb 4           ; Buffer para el carácter final
+
+section .text
+    global _start
+
+_start:
+
+    mov al, [num1]          ; Cargar num1
+    add al, [num2]          ; Sumar num2 → 16
+    mov [result], al        ; Guardar resultado
+
+    ; --- Conversión modificada ---
+    ; Queremos imprimir '&' (ASCII 38)
+
+    mov eax, '&'            ; Cargar '&'
+    mov [buffer], al        ; Guardarlo en buffer
+
+    ; Imprimir "Resultado: "
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg
+    mov edx, 11
+    int 0x80
+
+    ; Imprimir '&'
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, buffer
+    mov edx, 1
+    int 0x80
+
+    ; Salir
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+1
+section .data
+    num1 db 5               ; Primer número
+    num2 db 11              ; Segundo número
+    result db 0             ; Resultado de la suma
+    msg db 'Resultado: ', 0 ; Mensaje a imprimir
+
+section .bss
+    buffer resb 4           ; Buffer para el carácter final
+
+section .text
+    global _start
+
+_start:
+
+    mov al, [num1]          ; Cargar num1
+    add al, [num2]          ; Sumar num2 → 16
+    mov [result], al        ; Guardar resultado
+
+    ; --- Conversión modificada ---
+    ; Queremos imprimir '1' (ASCII 49)
+
+    mov eax, '1'            ; Cargar el carácter '1'
+    mov [buffer], al        ; Guardarlo en buffer
+
+    ; Imprimir "Resultado: "
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg
+    mov edx, 11
+    int 0x80
+
+    ; Imprimir '1'
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, buffer
+    mov edx, 1
+    int 0x80
+
+    ; Salir
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+Punto g DIRECCIONAMIENTO INMEDIATO
+section .data
+    num1 db 5
+    num2 db 11
+    result db 0
+    msg db 'Resultado: ', 0   ; Mensaje
+
+section .bss
+    buffer resb 4              ; Para guardar '@'
+
+section .text
+    global _start
+
+_start:
+
+    mov al, [num1]
+    add al, [num2]
+    mov [result], al
+
+    ; ---- Direccionamiento inmediato ----
+    mov eax, '@'               ; INMEDIATO: cargar '@' directamente
+    mov [buffer], al           ; Guardarlo en buffer
+
+    ; Imprimir mensaje
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg
+    mov edx, 11
+    int 0x80
+
+    ; Imprimir '@'
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, buffer
+    mov edx, 1
+    int 0x80
+
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+
+Punto g DIRECCIONAMIENTO INDIRECTO
+section .data
+    num1 db 5
+    num2 db 11
+    result db 0
+    msg db 'Resultado: ', 0
+
+section .bss
+    buffer resb 4             ; Aquí guardaremos '@'
+
+section .text
+    global _start
+
+_start:
+
+    mov al, [num1]
+    add al, [num2]
+    mov [result], al
+
+    ; ---- Direccionamiento indirecto ----
+    mov esi, buffer           ; ESI apunta al buffer
+    mov byte [esi], '@'       ; INDIRECTO: escribimos '@' usando el puntero
+
+    ; Imprimir mensaje
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg
+    mov edx, 11
+    int 0x80
+
+    ; Imprimir '@'
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, buffer
+    mov edx, 1
+    int 0x80
+
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80

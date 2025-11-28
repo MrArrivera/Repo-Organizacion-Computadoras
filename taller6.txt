@@ -1,0 +1,19 @@
+section .data
+    num1 db 5          ; Primer número
+    num2 db 5          ; Segundo número
+    mensaje_igual db "Son iguales", 0
+    mensaje_diferente db "Son diferentes", 0
+
+section .text
+global _start
+
+_start:
+    MOV AL, [num1]      ; Cargar num1 en AL
+    MOV BL, [num2]      ; Cargar num2 en BL
+    CMP AL, BL          ; Comparar AL y BL
+    JE iguales          ; Si son iguales, saltar a 'iguales'
+    JMP fin             ; Saltar al final
+
+iguales:
+
+fin:

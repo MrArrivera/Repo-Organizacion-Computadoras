@@ -1,0 +1,144 @@
+section .data
+caracter db 0
+section .text
+global _start
+_start:
+;-----------------------------------
+; Ejemplo 1: Imprimir 'A' (ASCII 65)
+;-----------------------------------
+mov al, 0
+add al, 50
+add al, 10
+add al, 5
+mov [caracter], al
+
+; Imprimir 'A'
+mov eax, 4
+mov ebx, 1
+mov ecx, caracter
+mov edx, 1
+int 0x80
+;-----------------------------------
+; Ejemplo 2: Imprimir ':' (ASCII 58)
+;-----------------------------------
+mov al, 0
+add al, 50
+add al, 8
+mov [caracter], al
+mov eax, 4
+mov ebx, 1
+mov ecx, caracter
+mov edx, 1
+int 0x80
+;-----------------------------------
+; Ejemplo 3: Imprimir '=' (ASCII 61)
+;-----------------------------------
+mov al, 0
+add al, 50
+add al, 10
+add al, 1
+mov [caracter], al
+mov eax, 4
+mov ebx, 1
+mov ecx, caracter
+mov edx, 1
+int 0x80
+;-----------------------------------
+; Ejemplo 4: Imprimir '?' (ASCII 63)
+;-----------------------------------
+mov al, 0
+add al, 60
+add al, 3
+mov [caracter], al
+mov eax, 4
+mov ebx, 1
+mov ecx, caracter
+mov edx, 1
+int 0x80
+;-----------------------------------
+; Ejemplo 5: Imprimir '_' (ASCII 95)
+;-----------------------------------
+mov al, 0
+
+add al, 90
+add al, 5
+mov [caracter], al
+mov eax, 4
+mov ebx, 1
+mov ecx, caracter
+mov edx, 1
+int 0x80
+;-----------------------------------
+; Salir del programa
+;-----------------------------------
+mov eax, 1
+xor ebx, ebx
+int 0x80
+
+section .data
+caracter db 0
+section .text
+global _start
+_start:
+;-----------------------------------
+; 1. Imprimir 'B' (ASCII 66)
+;-----------------------------------
+mov al, 70
+sub al, 4
+mov [caracter], al
+mov eax, 4
+mov ebx, 1
+mov ecx, caracter
+mov edx, 1
+int 0x80
+;-----------------------------------
+; 2. Imprimir 'x' (ASCII 120)
+;-----------------------------------
+mov al, 130
+sub al, 10
+mov [caracter], al
+mov eax, 4
+mov ebx, 1
+mov ecx, caracter
+mov edx, 1
+int 0x80
+;-----------------------------------
+; 3. Imprimir '+' (ASCII 43)
+;-----------------------------------
+
+mov al, 50
+sub al, 7
+mov [caracter], al
+mov eax, 4
+mov ebx, 1
+mov ecx, caracter
+mov edx, 1
+int 0x80
+;-----------------------------------
+; 4. Imprimir '‘' (ASCII 39)
+;-----------------------------------
+mov al, 40
+sub al, 1
+mov [caracter], al
+mov eax, 4
+mov ebx, 1
+mov ecx, caracter
+mov edx, 1
+int 0x80
+;-----------------------------------
+; 5. Imprimir '{' (ASCII 123)
+;-----------------------------------
+mov al, 130
+sub al, 7
+mov [caracter], al
+mov eax, 4
+mov ebx, 1
+mov ecx, caracter
+mov edx, 1
+int 0x80
+;-----------------------------------
+; Salir del programa
+;-----------------------------------
+mov eax, 1
+xor ebx, ebx
+int 0x80

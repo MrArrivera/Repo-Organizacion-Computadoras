@@ -1,0 +1,271 @@
+1
+Comparador de Números: Escribir un programa que
+reciba dos números y determine si son iguales, si uno es
+mayor que el otro, o si son negativos.
+section .data
+msg_equal db 'Los numeros son iguales', 0xA, 0
+msg_greater db 'El primer numero es mayor', 0xA, 0
+msg_smaller db 'El primer numero es menor', 0xA, 0
+msg_negative db 'El numero es negativo', 0xA, 0
+section .bss
+num1 resb 1
+num2 resb 1
+section .text
+global _start
+_start:
+; Leer los dos números
+; (Código de lectura aquí...)
+; Comparar los números
+mov al, [num1] ; Cargar el primer número
+cmp al, [num2] ; Comparar con el segundo número
+je equal_flag ; Si son iguales, saltar a equal_flag
+jl smaller_flag ; Si el primer número es menor, saltar a smaller_flag
+jg greater_flag ; Si el primer número es mayor, saltar a greater_flag
+equal_flag:
+mov ecx, msg_equal
+jmp print_result
+smaller_flag:
+mov ecx, msg_smaller
+jmp print_result
+greater_flag:
+mov ecx, msg_greater
+jmp print_result
+print_result:
+; (Código para imprimir el resultado)
+; (Código de salida aquí...)
+
+2
+Clasificación de Números: Leer un número y
+clasificarlo como positivo, negativo o cero.
+section .data
+msg_positive db 'El numero es positivo', 0xA, 0
+msg_negative db 'El numero es negativo', 0xA, 0
+msg_zero db 'El numero es cero', 0xA, 0
+section .bss
+num resd 1
+section .text
+global _start
+_start:
+mov eax, [num]
+cmp eax, 0
+je is_zero
+jl is_negative
+jmp is_positive
+is_zero:
+mov ecx, msg_zero
+jmp print_result
+is_negative:
+mov ecx, msg_negative
+jmp print_result
+is_positive:
+mov ecx, msg_positive
+jmp print_result
+print_result:
+; Código de impresión y salida aquí
+; ...
+
+3
+Par o Impar: Leer un número y determinar si es par o
+impar usando únicamente la bandera de paridad (PF).
+section .data
+msg_even db 'El numero es par', 0xA, 0
+msg_odd db 'El numero es impar', 0xA, 0
+section .bss
+num resd 1
+section .text
+global _start
+_start:
+mov eax, [num]
+; Aislar LSB (bit menos significativo)
+test eax, 1
+; JP (Jump if Parity): Salta si PF = 1 (Número Par)
+jp is_even
+; Si PF = 0, el número es IMPAR
+jmp is_odd
+is_even:
+mov ecx, msg_even
+jmp print_result
+is_odd:
+mov ecx, msg_odd
+jmp print_result
+print_result:
+; Código de impresión y salida aquí
+; ...
+
+4
+Simulación de Overflow: Pedir dos números y
+sumarlos, verificando si ocurre desbordamiento con la
+bandera OF (Overflow Flag). Imprimir un mensaje si se
+detecta overflow.
+section .data
+msg_no_overflow db 'Suma completada. No hubo desbordamiento.', 0xA, 0
+msg_overflow db '¡ERROR! Se detectó desbordamiento (Overflow).', 0xA, 0
+section .bss
+num1 resd 1
+num2 resd 1
+sum_result resd 1
+section .text
+global _start
+_start:
+mov eax, [num1]
+mov ebx, [num2]
+add eax, ebx
+; JNO (Jump if No Overflow): Salta si OF = 0
+jno no_overflow
+jmp overflow_detected
+no_overflow:
+mov [sum_result], eax
+mov ecx, msg_no_overflow
+jmp print_result
+overflow_detected:
+mov ecx, msg_overflow
+jmp print_result
+print_result:
+; Código de impresión y salida aquí
+; ...
+
+5
+Simulación de Acarreo: Realizar una suma entre dos
+números y verificar si hay un acarreo con la bandera CF
+(Carry Flag). Mostrar si se generó un acarreo o no.
+section .data
+msg_no_carry db 'Suma completada. No hubo acarreo.', 0xA, 0
+msg_carry db '¡ATENCION! Se generó un acarreo.', 0xA, 0
+section .bss
+num1 resd 1
+num2 resd 1
+sum_result resd 1
+section .text
+global _start
+_start:
+mov eax, [num1]
+mov ebx, [num2]
+add eax, ebx
+; JNC (Jump if No Carry): Salta si CF = 0
+jnc no_carry
+; Si JNC no salta, CF = 1.
+jmp carry_detected
+no_carry:
+mov [sum_result], eax
+mov ecx, msg_no_carry
+jmp print_result
+carry_detected:
+mov ecx, msg_carry
+; El valor de EAX aquí no se guarda si se considera una "falla"
+jmp print_result
+print_result:
+; Código de impresión y salida aquí
+; ...
+
+6
+Mínimo y Máximo de Tres Números: Leer tres números
+e identificar el menor y el mayor.
+section .data
+msg_min_is db 'El menor es: ', 0xA, 0
+msg_max_is db 'El mayor es: ', 0xA, 0
+section .bss
+num1 resd 1
+num2 resd 1
+num3 resd 1
+min_result resd 1
+max_result resd 1
+section .text
+global _start
+_start:
+; Cargar números. EAX=num1, EBX=num2, ECX=num3
+mov eax, [num1]
+mov ebx, [num2]
+mov ecx, [num3]
+; Inicializar MIN (ESI) y MAX (EDI) con num1 (EAX)
+mov esi, eax
+mov edi, eax
+; --- Encontrar MÍNIMO (ESI) ---
+; Comparar MIN con num2 (EBX)
+cmp esi, ebx
+jle check_num3_min ; Si ESI <= EBX, ESI sigue siendo el mínimo
+mov esi, ebx ; EBX es el nuevo mínimo
+check_num3_min:
+; Comparar MIN con num3 (ECX)
+cmp esi, ecx
+jle start_max_logic ; Si ESI <= ECX, ESI es el mínimo final
+mov esi, ecx ; ECX es el mínimo final
+; --- Encontrar MÁXIMO (EDI) ---
+start_max_logic:
+
+; Comparar MAX con num2 (EBX)
+cmp edi, ebx
+jge check_num3_max ; Si EDI >= EBX, EDI sigue siendo el máximo
+mov edi, ebx ; EBX es el nuevo máximo
+check_num3_max:
+; Comparar MAX con num3 (ECX)
+cmp edi, ecx
+jge store_results ; Si EDI >= ECX, EDI es el máximo final
+mov edi, ecx ; ECX es el máximo final
+store_results:
+; Guardar resultados
+mov [min_result], esi
+mov [max_result], edi
+jmp print_min_max
+print_min_max:
+; Código para imprimir y salir
+; ...
+
+7
+Ordenamiento de Dos Números
+Leer dos números e intercambiarlos si no están en orden
+ascendente usando solo saltos condicionales.
+section .data
+msg_ordered db 'Los numeros están en orden ascendente', 0xA, 0
+msg_swapped db 'Los numeros fueron intercambiados', 0xA, 0
+section .bss
+numA resd 1
+numB resd 1
+section .text
+global _start
+_start:
+mov eax, [numA]
+mov ebx, [numB]
+cmp eax, ebx
+; Si EAX <= EBX, ya está ordenado
+jle already_sorted
+swap_numbers:
+; Intercambio de EAX y EBX
+push eax
+mov eax, ebx
+pop ebx
+; Guardar los valores ordenados
+mov [numA], eax
+mov [numB], ebx
+mov ecx, msg_swapped
+jmp print_result
+already_sorted:
+; Guardar los valores (ya ordenados)
+mov [numA], eax
+mov [numB], ebx
+mov ecx, msg_ordered
+jmp print_result
+print_result:
+; Código para imprimir y salir
+; ...
+
+8
+Ciclo de Conteo sin Comparaciones: Implementar un
+contador de 0 a 9.
+section .data
+msg_num db 'Numero: ', 0xA, 0
+section .bss
+; Contadores
+section .text
+global _start
+_start:
+; Inicializar contadores:
+mov al, 0 ; Contador de 0 a 9 (AL)
+mov bl, 10 ; Contador auxiliar de iteraciones (BL), de 10 a 1
+start_loop:
+; Código para imprimir el valor actual de AL aquí
+inc al ; AL = AL + 1
+dec bl ; Decrementa BL y actualiza ZF
+; JNE (Jump if Not Equal to Zero): Salta si BL != 0 (ZF=0)
+jne start_loop
+end_program:
+; Código de salida
